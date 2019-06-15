@@ -8,20 +8,32 @@
 
 /* Begin PBXBuildFile section */
 		4608B65B22A351AE00CBCE21 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4608B65A22A351AE00CBCE21 /* AppDelegate.swift */; };
-		4608B65D22A351AE00CBCE21 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4608B65C22A351AE00CBCE21 /* ViewController.swift */; };
+		4608B65D22A351AE00CBCE21 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4608B65C22A351AE00CBCE21 /* LoginViewController.swift */; };
 		4608B66022A351AE00CBCE21 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4608B65E22A351AE00CBCE21 /* Main.storyboard */; };
 		4608B66222A351AF00CBCE21 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4608B66122A351AF00CBCE21 /* Assets.xcassets */; };
 		4608B66522A351AF00CBCE21 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4608B66322A351AF00CBCE21 /* LaunchScreen.storyboard */; };
+		4608B67222A37B0A00CBCE21 /* PhotosTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4608B67122A37B0A00CBCE21 /* PhotosTableViewController.swift */; };
+		4608B67422A37B1D00CBCE21 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4608B67322A37B1D00CBCE21 /* SettingsTableViewController.swift */; };
+		4608B67622A4375A00CBCE21 /* credentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4608B67522A4375900CBCE21 /* credentials.plist */; };
+		4608B67822A87E1000CBCE21 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4608B67722A87E1000CBCE21 /* Settings.swift */; };
+		8C83D3B27046144653D73705 /* Pods_Photo_Reporter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84F63BB3B434F70BDE4EE072 /* Pods_Photo_Reporter.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		076C185E301157C7748AF511 /* Pods-Photo Reporter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Photo Reporter.release.xcconfig"; path = "Target Support Files/Pods-Photo Reporter/Pods-Photo Reporter.release.xcconfig"; sourceTree = "<group>"; };
 		4608B65722A351AE00CBCE21 /* Photo Reporter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Photo Reporter.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4608B65A22A351AE00CBCE21 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		4608B65C22A351AE00CBCE21 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		4608B65C22A351AE00CBCE21 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		4608B65F22A351AE00CBCE21 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4608B66122A351AF00CBCE21 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4608B66422A351AF00CBCE21 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4608B66622A351AF00CBCE21 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4608B67122A37B0A00CBCE21 /* PhotosTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosTableViewController.swift; sourceTree = "<group>"; };
+		4608B67322A37B1D00CBCE21 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
+		4608B67522A4375900CBCE21 /* credentials.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = credentials.plist; sourceTree = "<group>"; };
+		4608B67722A87E1000CBCE21 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		80801BC871AD2C6D52EAC2AB /* Pods-Photo Reporter.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Photo Reporter.debug.xcconfig"; path = "Target Support Files/Pods-Photo Reporter/Pods-Photo Reporter.debug.xcconfig"; sourceTree = "<group>"; };
+		84F63BB3B434F70BDE4EE072 /* Pods_Photo_Reporter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Photo_Reporter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,6 +41,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8C83D3B27046144653D73705 /* Pods_Photo_Reporter.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -40,6 +53,8 @@
 			children = (
 				4608B65922A351AE00CBCE21 /* Photo Reporter */,
 				4608B65822A351AE00CBCE21 /* Products */,
+				548A77AE0698FA309CD24FDF /* Pods */,
+				8D1DB649BCC1F1E2D0E7CA55 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -54,14 +69,59 @@
 		4608B65922A351AE00CBCE21 /* Photo Reporter */ = {
 			isa = PBXGroup;
 			children = (
-				4608B65A22A351AE00CBCE21 /* AppDelegate.swift */,
-				4608B65C22A351AE00CBCE21 /* ViewController.swift */,
-				4608B65E22A351AE00CBCE21 /* Main.storyboard */,
-				4608B66122A351AF00CBCE21 /* Assets.xcassets */,
-				4608B66322A351AF00CBCE21 /* LaunchScreen.storyboard */,
+				4608B66E22A3532800CBCE21 /* Model */,
+				4608B66C22A3530800CBCE21 /* Controller */,
+				4608B66D22A3531B00CBCE21 /* View */,
 				4608B66622A351AF00CBCE21 /* Info.plist */,
+				4608B67522A4375900CBCE21 /* credentials.plist */,
+				4608B66322A351AF00CBCE21 /* LaunchScreen.storyboard */,
 			);
 			path = "Photo Reporter";
+			sourceTree = "<group>";
+		};
+		4608B66C22A3530800CBCE21 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				4608B65A22A351AE00CBCE21 /* AppDelegate.swift */,
+				4608B65C22A351AE00CBCE21 /* LoginViewController.swift */,
+				4608B67122A37B0A00CBCE21 /* PhotosTableViewController.swift */,
+				4608B67322A37B1D00CBCE21 /* SettingsTableViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		4608B66D22A3531B00CBCE21 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				4608B66122A351AF00CBCE21 /* Assets.xcassets */,
+				4608B65E22A351AE00CBCE21 /* Main.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		4608B66E22A3532800CBCE21 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				4608B67722A87E1000CBCE21 /* Settings.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		548A77AE0698FA309CD24FDF /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				80801BC871AD2C6D52EAC2AB /* Pods-Photo Reporter.debug.xcconfig */,
+				076C185E301157C7748AF511 /* Pods-Photo Reporter.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		8D1DB649BCC1F1E2D0E7CA55 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				84F63BB3B434F70BDE4EE072 /* Pods_Photo_Reporter.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -71,9 +131,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4608B66922A351AF00CBCE21 /* Build configuration list for PBXNativeTarget "Photo Reporter" */;
 			buildPhases = (
+				A31DC47FA52A67DBB6BFA705 /* [CP] Check Pods Manifest.lock */,
 				4608B65322A351AE00CBCE21 /* Sources */,
 				4608B65422A351AE00CBCE21 /* Frameworks */,
 				4608B65522A351AE00CBCE21 /* Resources */,
+				946DA75A3BA5BAC3A011E4A9 /* [CP] Embed Pods Frameworks */,
+				0B426E0C1DC43D87205B41AB /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -123,6 +186,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4608B66522A351AF00CBCE21 /* LaunchScreen.storyboard in Resources */,
+				4608B67622A4375A00CBCE21 /* credentials.plist in Resources */,
 				4608B66222A351AF00CBCE21 /* Assets.xcassets in Resources */,
 				4608B66022A351AE00CBCE21 /* Main.storyboard in Resources */,
 			);
@@ -130,13 +194,89 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		0B426E0C1DC43D87205B41AB /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Photo Reporter/Pods-Photo Reporter-resources.sh",
+				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Photo Reporter/Pods-Photo Reporter-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		946DA75A3BA5BAC3A011E4A9 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Photo Reporter/Pods-Photo Reporter-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleAPIClientForREST/GoogleAPIClientForREST.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleAPIClientForREST.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Photo Reporter/Pods-Photo Reporter-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A31DC47FA52A67DBB6BFA705 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Photo Reporter-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		4608B65322A351AE00CBCE21 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4608B65D22A351AE00CBCE21 /* ViewController.swift in Sources */,
+				4608B67422A37B1D00CBCE21 /* SettingsTableViewController.swift in Sources */,
+				4608B65D22A351AE00CBCE21 /* LoginViewController.swift in Sources */,
 				4608B65B22A351AE00CBCE21 /* AppDelegate.swift in Sources */,
+				4608B67222A37B0A00CBCE21 /* PhotosTableViewController.swift in Sources */,
+				4608B67822A87E1000CBCE21 /* Settings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,11 +420,13 @@
 		};
 		4608B66A22A351AF00CBCE21 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 80801BC871AD2C6D52EAC2AB /* Pods-Photo Reporter.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3F2Q7FQ47R;
 				INFOPLIST_FILE = "Photo Reporter/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -292,17 +434,19 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "IC.Photo-Reporter";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
 		4608B66B22A351AF00CBCE21 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 076C185E301157C7748AF511 /* Pods-Photo Reporter.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3F2Q7FQ47R;
 				INFOPLIST_FILE = "Photo Reporter/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -310,7 +454,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "IC.Photo-Reporter";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

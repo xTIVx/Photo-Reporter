@@ -7,14 +7,40 @@
 //
 
 import UIKit
+import GoogleSignIn
+import GTMSessionFetcher
 
-class ViewController: UIViewController {
-
+class LoginViewController: UIViewController, GIDSignInUIDelegate {
+    
+    let defaults = UserDefaults.standard
+    
+    @IBOutlet weak var signInButton: GIDSignInButton!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        GIDSignIn.sharedInstance().uiDelegate = self
+        
+        GIDSignIn.sharedInstance().scopes.append("https://www.googleapis.com/auth/plus.login")
+        GIDSignIn.sharedInstance().scopes.append("https://www.googleapis.com/auth/plus.me")
+        GIDSignIn.sharedInstance().scopes.append("https://www.googleapis.com/auth/drive")
+        
+        if GIDSignIn.sharedInstance()?.hasAuthInKeychain() == true {
+            GIDSignIn.sharedInstance().signInSilently()
+            
+        } else {
+            GIDSignIn.sharedInstance()?.signOut()
+        }
+        
     }
-
-
+    
+    override func viewDidAppear(_ animated: Bool) {
+       
+        if GIDSignIn.sharedInstance()?.hasAuthInKeychain() == true {
+            self.performSegue(withIdentifier: "loginSegue", sender: self)
+        }
+    }
+    
 }
 

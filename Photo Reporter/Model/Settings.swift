@@ -7,3 +7,18 @@
 //
 
 import Foundation
+
+final class Settings {
+    
+   static var shared = Settings()
+    
+    var jobCode: String?
+    var saveImagesSwitch = true
+    var parentID : String?
+    var installPhotosFolderID: String?
+    
+    
+    private init() {
+        
+    }
+}
