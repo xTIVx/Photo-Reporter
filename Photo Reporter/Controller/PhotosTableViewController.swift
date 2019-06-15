@@ -10,7 +10,6 @@ import UIKit
 import GoogleSignIn
 import GoogleAPIClientForREST
 import Photos
-import GTMSessionFetcher
 
 
 class PhotosTableViewController: UITableViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate{
@@ -26,11 +25,7 @@ class PhotosTableViewController: UITableViewController, UINavigationControllerDe
     var settings = Settings.shared
     
     
-    
-    
     @IBOutlet var photosTW: UITableView!
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         if let jcode = defaults.string(forKey: "jobCode"){
@@ -40,20 +35,15 @@ class PhotosTableViewController: UITableViewController, UINavigationControllerDe
                 self.settings.installPhotosFolderID = self.defaults.string(forKey: "Install Photos ID")
                 self.settings.jobCode = jcode
                 self.navigationItem.title = jcode.uppercased()
-                print(self.settings.installPhotosFolderID)
+                
             }
             present(ac, animated: true)
             ac.addAction(yes)
         }
-        
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
         navigationItem.title = settings.jobCode?.uppercased()
-        
-        
     }
     
     

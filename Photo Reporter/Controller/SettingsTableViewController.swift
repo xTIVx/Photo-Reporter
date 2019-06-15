@@ -8,7 +8,6 @@
 
 import UIKit
 import GoogleSignIn
-import GTMSessionFetcher
 import GoogleAPIClientForREST
 
 class SettingsTableViewController: UITableViewController {
@@ -19,7 +18,7 @@ class SettingsTableViewController: UITableViewController {
     let www : Error? = nil
     var gUser = AppDelegate.shared().gUser
     var auth = GIDSignIn.sharedInstance()?.currentUser.authentication.fetcherAuthorizer()
-    var parentID: String?
+    
     
     
     @IBOutlet weak var jobCodeTextField: UITextField!
@@ -52,18 +51,31 @@ class SettingsTableViewController: UITableViewController {
         defaults.set(savePhotosSwitch.isOn, forKey: "savePhotoSwitch")
         
         if let currentUser = GIDSignIn.sharedInstance()?.currentUser {
+            
             self.gDriveService.authorizer = self.auth
+            
             getParentID(name: self.jobCodeTextField.text!.trimmingCharacters(in: .whitespaces), service: self.gDriveService, user: currentUser) { (parentID) in
                 
                 if let parentid = parentID {
                     self.settings.parentID = parentid
                     self.settings.jobCode = self.jobCodeTextField.text?.trimmingCharacters(in: .whitespaces)
                     self.defaults.set(self.settings.jobCode, forKey: "jobCode")
-                    self.getFolderID(parent: parentID!, service: self.gDriveService, user: currentUser) { (folderID) in
-                        self.settings.installPhotosFolderID = folderID
-                        self.defaults.set(folderID, forKey: "Install Photos ID")
-                        print("FolderID: \(folderID)")
+                    self.defaults.set(parentid, forKey: "parentID")
+                    self.getFolderID(parent: parentid, service: self.gDriveService, user: currentUser) { (folderID) in
+                        if let folderid = folderID {
+                        self.settings.installPhotosFolderID = folderid
+                        self.defaults.set(folderid, forKey: "Install Photos ID")
                         self.navigationController?.popViewController(animated: true)
+                            print("НАШЕЛ!! \(folderid)")
+                        }
+                        else {
+                            self.createFolder(service: self.gDriveService, completion: { (createdFolderID) in
+                                self.defaults.set(createdFolderID, forKey: "Install Photos ID")
+                                self.settings.installPhotosFolderID = createdFolderID
+                                self.navigationController?.popViewController(animated: true)
+                                print("СОЗДАЛ!!! \(createdFolderID)")
+                            })
+                        }
                     }
                 } else {
                     let ac = UIAlertController(title: "Wrong Job Code!", message: "We can't find the folder with your JobCode! Double check your spelling!", preferredStyle: .alert)
@@ -120,7 +132,7 @@ class SettingsTableViewController: UITableViewController {
             
             // For brevity, assumes only one folder is returned.
             completion(folderList.files?.first?.identifier)
-            self.parentID = folderList.files?.first?.identifier
+            
             
         }
     }
@@ -143,7 +155,6 @@ class SettingsTableViewController: UITableViewController {
         let withName = "name = 'Install Photos'" // Case insensitive!
         let foldersOnly = "mimeType = 'application/vnd.google-apps.folder'"
         
-        //query.q = "\(withName) and \(foldersOnly)"
         
         query.q = "\(parent) in parents and \(withName) and \(foldersOnly)"
         service.executeQuery(query) { (_, result, error) in
@@ -156,35 +167,33 @@ class SettingsTableViewController: UITableViewController {
             
             // For brevity, assumes only one folder is returned.
             completion(folderList.files?.first?.identifier)
-            print(folderList.files?.first?.name)
             
         }
     }
     
    
-    
-//    func createFolder(
-//        name: String,
-//        service: GTLRDriveService,
-//        completion: @escaping (String) -> Void) {
-//        let parent = [settings.folderID!]
-//        let folder = GTLRDrive_File()
-//        folder.mimeType = "application/vnd.google-apps.folder"
-//        folder.name = name
-//        folder.parents = parent
-//        
-//        // Google Drive folders are files with a special MIME-type.
-//        let query = GTLRDriveQuery_FilesCreate.query(withObject: folder, uploadParameters: nil)
-//        
-//        service.executeQuery(query) { (_, file, error) in
-//            guard error == nil else {
-//                fatalError(error!.localizedDescription)
-//            }
-//            
-//            let folder = file as! GTLRDrive_File
-//            completion(folder.identifier!)
-//        }
-//    }
+    func createFolder(
+        service: GTLRDriveService,
+        completion: @escaping (String) -> Void) {
+        let parent = [settings.parentID]
+        let folder = GTLRDrive_File()
+        folder.mimeType = "application/vnd.google-apps.folder"
+        folder.name = "Install Photos"
+        folder.parents = parent as? [String]
+        
+        // Google Drive folders are files with a special MIME-type.
+        let query = GTLRDriveQuery_FilesCreate.query(withObject: folder, uploadParameters: nil)
+        
+        service.executeQuery(query) { (_, file, error) in
+            guard error == nil else {
+                fatalError(error!.localizedDescription)
+            }
+            
+            let folder = file as! GTLRDrive_File
+            completion(folder.identifier!)
+            
+        }
+    }
     
 }
     
