@@ -11,7 +11,9 @@ import GoogleSignIn
 import GoogleAPIClientForREST
 
 class SettingsTableViewController: UITableViewController {
-
+    
+    
+    static var shared = SettingsTableViewController()
     let defaults = UserDefaults.standard
     var settings = Settings.shared
     var gDriveService = GTLRDriveService()
@@ -22,19 +24,17 @@ class SettingsTableViewController: UITableViewController {
     
     
     @IBOutlet weak var jobCodeTextField: UITextField!
-    @IBOutlet weak var savePhotosSwitch: UISwitch!
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        savePhotosSwitch.isOn = settings.saveImagesSwitch
+        
         jobCodeTextField.text = settings.jobCode
-        savePhotosSwitch.isOn = defaults.bool(forKey: "savePhotoSwitch")
         
     }
     
     @IBAction func savePressed(_ sender: UIBarButtonItem) {
-        print(GIDSignIn.sharedInstance().hasAuthInKeychain())
+        
         guard jobCodeTextField.text != "" else {
             let ac = UIAlertController(title: "Enter Job Code!", message: "", preferredStyle: .alert)
             ac.addAction(UIAlertAction(title: "OK", style: .default))
@@ -42,26 +42,21 @@ class SettingsTableViewController: UITableViewController {
             return
         }
         
-        if savePhotosSwitch.isOn {
-            settings.saveImagesSwitch = true
-        } else {
-            settings.saveImagesSwitch = false
-        }
         
-        defaults.set(savePhotosSwitch.isOn, forKey: "savePhotoSwitch")
+       
         
-        if let currentUser = GIDSignIn.sharedInstance()?.currentUser {
+        if let _ = GIDSignIn.sharedInstance()?.currentUser {
             
             self.gDriveService.authorizer = self.auth
             
-            getParentID(name: self.jobCodeTextField.text!.trimmingCharacters(in: .whitespaces), service: self.gDriveService, user: currentUser) { (parentID) in
+            getParentID(name: self.jobCodeTextField.text!.trimmingCharacters(in: .whitespaces), service: self.gDriveService) { (parentID) in
                 
                 if let parentid = parentID {
                     self.settings.parentID = parentid
                     self.settings.jobCode = self.jobCodeTextField.text?.trimmingCharacters(in: .whitespaces)
                     self.defaults.set(self.settings.jobCode, forKey: "jobCode")
                     self.defaults.set(parentid, forKey: "parentID")
-                    self.getFolderID(parent: parentid, service: self.gDriveService, user: currentUser) { (folderID) in
+                    self.getFolderID(parent: parentid, service: self.gDriveService) { (folderID) in
                         if let folderid = folderID {
                         self.settings.installPhotosFolderID = folderid
                         self.defaults.set(folderid, forKey: "Install Photos ID")
@@ -83,10 +78,8 @@ class SettingsTableViewController: UITableViewController {
                     self.present(ac, animated: true)
                 }
             }
-            // TAKE TARGET FOLDER(Install Photos)
             
-            
-            
+           
         } else {
             let ac = UIAlertController(title: "Authorization Error!", message: "Try to log in again!", preferredStyle: .alert)
             ac.addAction(UIAlertAction(title: "OK", style: .default))
@@ -105,7 +98,6 @@ class SettingsTableViewController: UITableViewController {
     func getParentID(
         name: String,
         service: GTLRDriveService,
-        user: GIDGoogleUser,
         completion: @escaping (String?) -> Void) {
         
         let query = GTLRDriveQuery_FilesList.query()
@@ -140,7 +132,6 @@ class SettingsTableViewController: UITableViewController {
     func getFolderID(
         parent: String,
         service: GTLRDriveService,
-        user: GIDGoogleUser,
         completion: @escaping (String?) -> Void) {
         
         let query = GTLRDriveQuery_FilesList.query()
@@ -153,7 +144,7 @@ class SettingsTableViewController: UITableViewController {
         
         let parent = "'\(parent)'"
         let withName = "name = 'Install Photos'" // Case insensitive!
-        let foldersOnly = "mimeType = 'application/vnd.google-apps.folder'"
+        let foldersOnly = "mimeType = 'application/vnd.google-apps.folder' and trashed=false"
         
         
         query.q = "\(parent) in parents and \(withName) and \(foldersOnly)"

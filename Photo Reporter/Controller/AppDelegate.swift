@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     var window: UIWindow?
     
     var gUser: GIDGoogleUser?
-    var signIn: GIDSignIn?
+    
     
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -29,6 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         GIDSignIn.sharedInstance().clientID = "934001306357-8k35t8o6vsc6dhh0ds2sdbnr6d764pbe.apps.googleusercontent.com"
         GIDSignIn.sharedInstance().delegate = self
 
+        
         return true
     }
     
@@ -49,12 +50,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         } else {
             // Perform any operations on signed in user here.
 
-            
-            
             self.gUser = user
-            self.signIn = signIn
             
-
 //            self.userID = user.userID                  // For client-side use only!
 //           let idToken = user.authentication.idToken // Safe to send to the server
 //            self.fullName = user.profile.name
