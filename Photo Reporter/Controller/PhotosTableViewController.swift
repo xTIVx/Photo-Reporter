@@ -6,11 +6,14 @@
 //  Copyright © 2019 Igor Chernobai. All rights reserved.
 //
 
+// TO-DO: 1) Когда есть загруженное и отображаемое фото и попытаться вставить новое изображение - оно тут же заменяется на синхронизированное с гугла! поправить в viewWillAppear
+
 import UIKit
 import GoogleSignIn
 import GoogleAPIClientForREST
 import Photos
-
+import Foundation
+import GTMSessionFetcher
 
 class PhotosTableViewController: UITableViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate{
     
@@ -29,9 +32,9 @@ class PhotosTableViewController: UITableViewController, UINavigationControllerDe
     @IBOutlet var photosTW: UITableView!
     
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         if let jcode = defaults.string(forKey: "jobCode"){
             let ac = UIAlertController(title: "Use last Job Code?", message: "Do you want to use \(jcode.uppercased())?", preferredStyle: .alert)
             ac.addAction(UIAlertAction(title: "No", style: .destructive))
@@ -43,16 +46,13 @@ class PhotosTableViewController: UITableViewController, UINavigationControllerDe
                 if let auth = AppDelegate.shared().gUser?.authentication.fetcherAuthorizer() {
                     self.googleDriveService.authorizer = auth
                     self.getAllFiles(folderID: self.settings.installPhotosFolderID!, service: self.googleDriveService)
+                    
                 }
-                
-                
-                
-                
-               
             }
             present(ac, animated: true)
             ac.addAction(yes)
         }
+      
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -63,13 +63,11 @@ class PhotosTableViewController: UITableViewController, UINavigationControllerDe
             self.getAllFiles(folderID: self.settings.installPhotosFolderID!, service: self.googleDriveService)
             }
         }
+        
     }
     
     
-    
-    
     func getAllFiles(folderID: String, service: GTLRDriveService) {
-        print(folderID)
         
         let root = "mimeType = 'image/jpeg' and trashed=false"
         let withName = "'\(folderID)'"
@@ -84,26 +82,32 @@ class PhotosTableViewController: UITableViewController, UINavigationControllerDe
                 print(error.localizedDescription)
                 return
             }
-
+            
             if let filesList : GTLRDrive_FileList = files as? GTLRDrive_FileList {
                 if let filesShow : [GTLRDrive_File] = filesList.files {
                     
                     for i in self.tableView.visibleCells {
+                        
                         for name in filesShow {
                             if name.name == i.textLabel?.text {
+                                print(name)
                                 i.detailTextLabel?.text = name.identifier
                                 i.accessoryType = .checkmark
-                                self.tableView.reloadData()
+                                self.downloadFile(fileID: name.identifier!, service: self.googleDriveService, cell: i)
+                                
                                 continue
                             }
+                            
                         }
                     }
-                    
+                    self.tableView.reloadData()
                 }
             }
         })
         
     }
+    
+   
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         cell = super.tableView(tableView, cellForRowAt: indexPath) as UITableViewCell
@@ -141,10 +145,12 @@ class PhotosTableViewController: UITableViewController, UINavigationControllerDe
             }
             alertController.addAction(a2Photo)
             
-            if tableView.cellForRow(at: indexPath)!.imageView?.image != nil {
+            if tableView.cellForRow(at: indexPath)!.imageView?.image != nil || tableView.cellForRow(at: indexPath)?.accessoryType == .checkmark {
                 let a3Delete = UIAlertAction(title: "Delete", style: .destructive) { (alert) in
-                    tableView.cellForRow(at: indexPath)!.imageView?.image = nil
-                    tableView.reloadData()
+                        
+                    self.deleteFile(cell: tableView.cellForRow(at: indexPath)!, fileID: tableView.cellForRow(at: indexPath)!.detailTextLabel!.text!, service: self.googleDriveService)
+                    
+                    
                 }
                 alertController.addAction(a3Delete)
             }
@@ -210,8 +216,6 @@ class PhotosTableViewController: UITableViewController, UINavigationControllerDe
                         self.googleDriveService.authorizer = GIDSignIn.sharedInstance()?.currentUser.authentication.fetcherAuthorizer()
                         
                             self.uploadFile(cell: i, name: label, folderID: self.settings.installPhotosFolderID!, fileURL: self.getDocumentsDirectory().appendingPathComponent("\(label).png"), mimeType: "image/png", cellLabel: label, service: self.googleDriveService)
-                        
-                        
                      
                     }
                     }
@@ -258,7 +262,6 @@ class PhotosTableViewController: UITableViewController, UINavigationControllerDe
         
         
         
-        
         }
     // Getting document directory for save images to temporary folder in documents
     func getDocumentsDirectory() -> URL {
@@ -284,7 +287,7 @@ class PhotosTableViewController: UITableViewController, UINavigationControllerDe
         let uploadParameters = GTLRUploadParameters(fileURL: fileURL, mimeType: mimeType)
         
         let query = GTLRDriveQuery_FilesCreate.query(withObject: file, uploadParameters: uploadParameters)
-        
+       
         service.uploadProgressBlock = { _, totalBytesUploaded, totalBytesExpectedToUpload in
             // This block is called multiple times during upload and can
             // be used to update a progress indicator visible to the user.
@@ -296,12 +299,64 @@ class PhotosTableViewController: UITableViewController, UINavigationControllerDe
             }
             
             // Successful upload if no error is returned.
+            
             let folderList = result as! GTLRDrive_File
             cell.detailTextLabel?.text = folderList.identifier
             self.deleteFromTempFolder(fileName: cellLabel)
             cell.accessoryType = .checkmark
+            
+  
         }
     }
+    
+ //  DOWNLOAD IMAGES FOR DISPLAY it in ImageView.image in cells!
+    func downloadFile(fileID: String, service: GTLRDriveService, cell: UITableViewCell) {
+    let url = "https://www.googleapis.com/drive/v3/files/\(fileID)?alt=media"
+        
+        let fetcher = service.fetcherService.fetcher(withURLString: url)
+    
+        fetcher.beginFetch { (data, error) in
+            if let error = error {
+                print(error.localizedDescription)
+            }
+            if let image = UIImage(data: data!, scale: 0.1) {
+            cell.imageView?.image = image
+                self.tableView.reloadData()
+            }
+        }
+        
+    }
+    
+    // Delete file from GOOGLE DRIVE
+    func deleteFile (
+        cell: UITableViewCell,
+        fileID: String,
+        service: GTLRDriveService) {
+       
+        
+        let query = GTLRDriveQuery_FilesDelete.query(withFileId: fileID)
+        
+        service.executeQuery(query) { (ticket, any, error) in
+            if let error = error {
+                print(error.localizedDescription)
+                
+            }
+            if let any = any {
+                print(any)
+                
+            }
+            if ticket.statusCode == 204 {
+                cell.imageView?.image = nil
+                cell.accessoryType = .none
+                self.tableView.reloadData()
+            }
+        }
+        
+    }
+    
+    
+    
+    
     
     // DELETE FILE FROM DOCUMENTS!
     func deleteFromTempFolder (fileName: String) {
@@ -346,6 +401,9 @@ class PhotosTableViewController: UITableViewController, UINavigationControllerDe
             return false
         }
     }
+    
+    
+    
     
 }
 
@@ -442,4 +500,50 @@ extension PHPhotoLibrary {
 }
 
 
+extension UIImage {
+    convenience init?(url: URL?) {
+        guard let url = url else { return nil }
+        
+        do {
+            let data = try Data(contentsOf: url)
+            self.init(data: data)
+        } catch {
+            print("Cannot load image from url: \(url) with error: \(error)")
+            return nil
+        }
+    }
+}
 
+
+
+// Func for add action to ImageView
+
+//class ViewController: UIViewController {
+//
+//    @IBOutlet weak var imageView: UIImageView!
+//
+//    override func viewDidLoad() {
+//        super.viewDidLoad()
+//        // create tap gesture recognizer
+//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(ViewController.imageTapped(gesture:)))
+//
+//        // add it to the image view;
+//        imageView.addGestureRecognizer(tapGesture)
+//        // make sure imageView can be interacted with by user
+//        imageView.isUserInteractionEnabled = true
+//    }
+//
+//    @objc func imageTapped(gesture: UIGestureRecognizer) {
+//        // if the tapped view is a UIImageView then set it to imageview
+//        if (gesture.view as? UIImageView) != nil {
+//            print("Image Tapped")
+//            //Here you can initiate your new ViewController
+//
+//        }
+//    }
+//}
+
+
+
+
+ //let query2 = GTLRDriveQuery_FilesDelete.query(withFileId: fileID)
