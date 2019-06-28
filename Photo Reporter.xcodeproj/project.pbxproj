@@ -16,6 +16,7 @@
 		4608B67422A37B1D00CBCE21 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4608B67322A37B1D00CBCE21 /* SettingsTableViewController.swift */; };
 		4608B67622A4375A00CBCE21 /* credentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4608B67522A4375900CBCE21 /* credentials.plist */; };
 		4608B67822A87E1000CBCE21 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4608B67722A87E1000CBCE21 /* Settings.swift */; };
+		462DF87222C17825005BAEE5 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462DF87122C17825005BAEE5 /* CustomTableViewCell.swift */; };
 		8C83D3B27046144653D73705 /* Pods_Photo_Reporter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84F63BB3B434F70BDE4EE072 /* Pods_Photo_Reporter.framework */; };
 /* End PBXBuildFile section */
 
@@ -32,6 +33,7 @@
 		4608B67322A37B1D00CBCE21 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		4608B67522A4375900CBCE21 /* credentials.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = credentials.plist; sourceTree = "<group>"; };
 		4608B67722A87E1000CBCE21 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		462DF87122C17825005BAEE5 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
 		80801BC871AD2C6D52EAC2AB /* Pods-Photo Reporter.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Photo Reporter.debug.xcconfig"; path = "Target Support Files/Pods-Photo Reporter/Pods-Photo Reporter.debug.xcconfig"; sourceTree = "<group>"; };
 		84F63BB3B434F70BDE4EE072 /* Pods_Photo_Reporter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Photo_Reporter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -95,6 +97,7 @@
 			children = (
 				4608B66122A351AF00CBCE21 /* Assets.xcassets */,
 				4608B65E22A351AE00CBCE21 /* Main.storyboard */,
+				462DF87122C17825005BAEE5 /* CustomTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -272,6 +275,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				462DF87222C17825005BAEE5 /* CustomTableViewCell.swift in Sources */,
 				4608B67422A37B1D00CBCE21 /* SettingsTableViewController.swift in Sources */,
 				4608B65D22A351AE00CBCE21 /* LoginViewController.swift in Sources */,
 				4608B65B22A351AE00CBCE21 /* AppDelegate.swift in Sources */,
