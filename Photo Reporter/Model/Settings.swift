@@ -12,18 +12,16 @@ final class Settings {
     
    static var shared = Settings()
     
-   
+    private init() {}
     
     var jobCode: String?
     var parentID : String?
     var installPhotosFolderID: String?
-    var photoList = ["Base", "Ladder Safety", "Caution Cape"]
+    var actualPhotoListfromGoogle: [String : String] = [:]
+    var actualPhotoListFromStorage = [URL]()
+    var staticPhotoList = ["base", "roof", "ladder", "Rail"] /*ONLY LOWERCASE!*/
     
+    var arrayUploadQueue = [""]
     
-    
-    var arrayUploadQueue = [String]()
-    
-    private init() {
-        
-    }
+   
 }

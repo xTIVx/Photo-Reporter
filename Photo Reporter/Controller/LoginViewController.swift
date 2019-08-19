@@ -28,7 +28,7 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate {
         
         if GIDSignIn.sharedInstance()?.hasAuthInKeychain() == true {
             GIDSignIn.sharedInstance().signInSilently()
-            
+           
         } else {
             GIDSignIn.sharedInstance()?.signOut()
         }

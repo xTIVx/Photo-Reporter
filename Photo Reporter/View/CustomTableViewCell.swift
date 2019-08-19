@@ -12,8 +12,6 @@ class CustomTableViewCell: UITableViewCell {
 
     
     
-    
-    
     @IBOutlet weak var imagePhoto: UIImageView!
     @IBOutlet weak var namePhoto: UILabel!
     @IBOutlet weak var idPhoto: UILabel!
@@ -21,12 +19,7 @@ class CustomTableViewCell: UITableViewCell {
     @IBOutlet weak var uploadActivityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var downloadActivityIndicator: UIActivityIndicatorView!
     
-    override func prepareForReuse() {
-        
-        imagePhoto.image = nil
-        namePhoto.text = nil
-        idPhoto.text = nil
-    }
+    
     
     
     override func awakeFromNib() {
